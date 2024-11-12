@@ -1,11 +1,17 @@
 :80 {
+	# Enable access logging for this site
+	log {
+		output stdout
+		format console
+	}
+
 	handle_path /socketio/* {
 		reverse_proxy socketio:8000
 	}
 	handle_path /service/* {
 		reverse_proxy service:8000
 	}
-	handle_path /srapi/* {
+	handle_path /strapi/* {
 		reverse_proxy srapi:1337
 	}
 	handle /app/* {

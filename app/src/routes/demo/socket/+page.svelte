@@ -22,6 +22,10 @@
         socket.on("connect", () => {
             console.log("Connected to server");
         });
+        socket.on("paymentStatus", (paymnet) => {
+            payment = paymnet;
+            console.log("Payment Updated");
+        });
         return () => {
             socket.disconnect();
         };

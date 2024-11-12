@@ -13,6 +13,15 @@ const io = new Server(server, {
 
 });
 
+console.log("Socket Server started on port 8000");
+
+const fakeNewStatus = (socket, id, status, seconds) => {
+  setTimeout(() => {
+    socket.emit("paymentStatus", {id, status, message: `Payment ${status}`});
+  }, seconds * 1000);
+}
+
+
 io.on("connection", (socket) => {
   console.log(`socket ${socket.id} connected`);
 
@@ -23,7 +32,11 @@ io.on("connection", (socket) => {
 
   socket.on("paymentStart", (payment, cb) => {
     console.log(`socket ${socket.id} sent message: ${payment.id}`);
-    cb({id: payment.id, status: "success", message: "Payment successful"});
+    fakeNewStatus(socket, payment.id, "pending", 1);
+    fakeNewStatus(socket, payment.id,  "approved", 3);
+
+    cb({id: payment.id, status: "init", message: "Payment initialized"});
+
 
   });
 
