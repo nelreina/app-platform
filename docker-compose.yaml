@@ -1,0 +1,47 @@
+services:
+  payment-caddy:
+    image: caddy:latest
+    restart: unless-stopped
+    container_name: payment-caddy
+    ports:
+      - 9001:80
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+  
+  static:
+    image: caddy:latest
+    container_name: static
+    volumes:
+      - ./static/index.html:/usr/share/caddy/index.html
+      - ./static/Caddyfile:/etc/caddy/Caddyfile
+  
+  app:
+    build:
+      context: ./app
+      dockerfile: Dockerfile.dev
+    command: ["npm", "run", "dev", "--", "--host"]
+    container_name: app
+    volumes:
+      - ./app/src:/usr/src/app/src
+      - ./app/static:/usr/src/app/static
+
+  service:
+    build:
+      context: ./service
+      dockerfile: Dockerfile.dev
+    restart: always
+    environment:
+      - SERVICE_NAME=service
+    volumes:
+      - ./service/src:/app/src
+    container_name: service
+    # scale: 3
+    env_file:
+      - ./.env
+
+
+networks:
+  default:
+    name: traefik
+    external: true
+

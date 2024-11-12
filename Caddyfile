@@ -1,0 +1,15 @@
+:80 {
+	handle_path /socketio/* {
+		reverse_proxy socketio:8000
+	}
+	handle_path /service/* {
+		reverse_proxy service:8000
+	}
+	handle_path /srapi/* {
+		reverse_proxy srapi:1337
+	}
+	handle /app/* {
+		reverse_proxy app:5173
+	}
+	reverse_proxy static:80
+}
