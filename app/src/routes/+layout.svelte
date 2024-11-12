@@ -14,7 +14,7 @@
 		<a href="{base}/demo/posts">Posts</a>
 		<a href="{base}/demo/socket">SocketIO</a>
 		<a href="{base}/demo/paraglide">Paraglide</a>
-		<!-- <a href="/strapi">Strapi Admin</a> -->
+		<a href="/strapi/admin">Strapi Admin</a>
 	</nav>
 	{@render children()}
 </ParaglideJS>

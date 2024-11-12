@@ -12,7 +12,7 @@
 		reverse_proxy service:8000
 	}
 	handle_path /strapi/* {
-		reverse_proxy srapi:1337
+		reverse_proxy strapi:1337
 	}
 	handle /app/* {
 		reverse_proxy app:5173
